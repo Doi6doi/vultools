@@ -53,12 +53,12 @@ bool vtl_same( VcpStr a, VcpStr b ) {
 
 uint32_t vtl_fread( void * stream, void * mem, uint32_t size ) {
    return size * fread( mem, size, 1, stream );
-}   
-   
+}
+
 uint32_t vtl_fread_part( void * stream, void * mem, uint32_t size ) {
    return fread( mem, 1, size, stream );
-}   
-   
+}
+
 uint32_t vtl_fwrite( void * stream, void * mem, uint32_t size ) {
    return size * fwrite( mem, size, 1, stream );
 }
@@ -69,10 +69,11 @@ void vtl_die( VcpStr s ) {
 }
 
 bool vtl_read_block( void * stream, VtlStreamOp read, void * mem, uint32_t size ) {
+   char * p = mem;
    while ( 0 < size ) {
       uint32_t n = read( stream, mem, size );
       if ( 0 == n ) return false;
-      (char *)mem += n;
+      p += n;
       size -=n;
    }
    return true;
@@ -90,10 +91,11 @@ bool vtl_read_skip( void * stream, VtlStreamOp read, uint32_t size ) {
 }
 
 bool vtl_write_block( void * stream, VtlStreamOp write, void * mem, uint32_t size ) {
+   char * p = mem;
    while ( 0 < size ) {
       uint32_t n = write( stream, mem, size );
       if ( 0 == n ) return false;
-      (char *)mem += n;
+      p += n;
       size -= n;
    }
    return true;
@@ -104,7 +106,7 @@ void vtl_ewrite( VcpStr s ) {
    fprintf( stderr, "%s\n", s );
 }
 
-   
+
 static int vtl_physical_type_cpu( VkPhysicalDeviceType pdt ) {
    switch ( pdt ) {
       case VK_PHYSICAL_DEVICE_TYPE_CPU: return 2;
