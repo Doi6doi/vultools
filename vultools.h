@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include "vtools_arch.h"
 
 typedef const char * VcpStr;
 
