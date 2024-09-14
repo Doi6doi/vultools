@@ -1,3 +1,5 @@
 Makefile
 vultools.o
 libvultools.so
+/*.obj
+/*.dll

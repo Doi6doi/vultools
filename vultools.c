@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <vulkan/vulkan.h>
+
 
 char * vtBuf = NULL;
 uint32_t vtBufSize = 0;
@@ -70,7 +72,7 @@ bool vtl_read_block( void * stream, VtlStreamOp read, void * mem, uint32_t size 
    while ( 0 < size ) {
       uint32_t n = read( stream, mem, size );
       if ( 0 == n ) return false;
-      mem += n;
+      (char *)mem += n;
       size -=n;
    }
    return true;
@@ -91,7 +93,7 @@ bool vtl_write_block( void * stream, VtlStreamOp write, void * mem, uint32_t siz
    while ( 0 < size ) {
       uint32_t n = write( stream, mem, size );
       if ( 0 == n ) return false;
-      mem += n;
+      (char *)mem += n;
       size -= n;
    }
    return true;
@@ -102,16 +104,6 @@ void vtl_ewrite( VcpStr s ) {
    fprintf( stderr, "%s\n", s );
 }
 
-void vtl_ewrite_stamp( VcpStr msg ) {
-   static uint64_t last = 0;
-   struct timespec ts;
-   clock_gettime(CLOCK_MONOTONIC, &ts);
-   uint64_t curr = (uint64_t)(ts.tv_nsec / 1000000) 
-      + ((uint64_t)ts.tv_sec * 1000ull);
-   if ( last )
-      fprintf( stderr, "%s: %ld\n", msg, curr-last );
-   last = curr;
-}
    
 static int vtl_physical_type_cpu( VkPhysicalDeviceType pdt ) {
    switch ( pdt ) {
