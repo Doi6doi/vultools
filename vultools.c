@@ -46,7 +46,7 @@ VcpStr vtl_cat( VcpStr a, VcpStr b ) {
 }
 
 bool vtl_same( VcpStr a, VcpStr b ) {
-   if ( !a ) return ! b;
+   if ( !a ) return !b;
    if ( !b ) return false;
    return 0 == strcmp( a, b );
 }
