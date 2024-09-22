@@ -9,14 +9,12 @@
 #define VT_L16(x) x
 #define VT_L32(x) x
 
-#elif 
-
 #elif defined(__linux__) || defined(__CYGWIN__)
 
 #include <endian.h>
 
-#define VTL_16(x) htole16(x)
-#define VTL_32(x) htole32(x)
+#define VT_L16(x) htole16(x)
+#define VT_L32(x) htole32(x)
 
 #endif
 
